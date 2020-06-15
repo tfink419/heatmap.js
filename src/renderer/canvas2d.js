@@ -1,3 +1,4 @@
+var Color = require('color');
 
 var Canvas2dRenderer = (function Canvas2dRendererClosure() {
 
@@ -151,6 +152,10 @@ var Canvas2dRenderer = (function Canvas2dRendererClosure() {
         this.canvas.style.backgroundColor = config.backgroundColor;
       }
 
+      if(config.defaultColor) {
+        this._defaultColor = Color(config.defaultColor);
+      }
+
       this._width = this.canvas.width = this.shadowCanvas.width = config.width || this._width;
       this._height = this.canvas.height = this.shadowCanvas.height = config.height || this._height;
 
@@ -252,6 +257,12 @@ var Canvas2dRenderer = (function Canvas2dRendererClosure() {
 
 
         if (!offset) {
+          if(this._defaultColor) {
+            imgData[i-3] = this._defaultColor.red();
+            imgData[i-2] = this._defaultColor.green();
+            imgData[i-1] = this._defaultColor.blue();
+            imgData[i] = minOpacity;
+          }
           continue;
         }
 
